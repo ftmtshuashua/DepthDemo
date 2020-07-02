@@ -1,0 +1,3 @@
+include ':AAR_Proguard'
+include ':app'
+rootProject.name = "DepthDemo"
