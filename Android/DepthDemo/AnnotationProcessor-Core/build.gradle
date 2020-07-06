@@ -1,27 +1,31 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "29.0.2"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
-        //当打包AAR的时候 "consumer-rules.pro" 会被包含到AAR之中，其他工程引用打包的时候会使用该规则
         consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
         release {
-            //手动构建AAR的时候启动混淆配置
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    
+
+    api project(':AnnotationProcessor-Annoation')
+
 }

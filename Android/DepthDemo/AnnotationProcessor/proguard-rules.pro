@@ -19,8 +19,3 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
-#引入其他pro配置
--include 'consumer-rules.pro'
-
--keep class com.depth.aar_proguard.ImClass_2{}

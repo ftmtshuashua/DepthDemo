@@ -1,3 +1,7 @@
+include ':AnnotationProcessor-Core'
+include ':AnnotationProcessor-Annoation'
+include ':AnnotationProcessor-Compile'
+include ':AnnotationProcessor'
 include ':AAR_Proguard'
 include ':app'
 rootProject.name = "DepthDemo"
