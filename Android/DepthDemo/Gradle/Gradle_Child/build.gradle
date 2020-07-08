@@ -1,0 +1,121 @@
+apply plugin: 'java-library'
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+
+
+//-------------------------任务创建----------------------- https://juejin.im/post/5d1cc4266fb9a07ea9448c50
+
+task createTask{
+    // Task的可配置参数
+//    type：基于一个已存在的Task来创建，类似于类的继承，默认值DefaultTask
+//    overwrite：是否替换存在的Task,一般和type配合使用，默认值false
+//    dependsOn：配置当前任务的依赖，默认值[]
+//    action：添加到任务中的一个Action或者是一个闭包，默认值为null
+//    description：任务描述，默认值null
+//    group：任务分组，默认值null
+    enabled = true
+
+    description = "这个是这个任务的描述"
+
+    doFirst{
+        println 'doFirst'
+    }
+
+
+    doLast{
+        println 'doLast'
+    }
+}
+
+//2. 使用TaskContainer创建一个任务,Project已经定义的TaskContainer,即tasks
+tasks.create("createTask1"){
+    doFirst{
+        println 'doFirst'
+    }
+
+    doLast{
+        println 'doLast'
+    }
+}
+
+
+
+//-------------------------任务依赖-----------------------
+
+task A(){
+    doFirst {
+        println 'task doFirst A'
+    }
+    doLast {
+        println 'task doLast A'
+    }
+
+
+}
+
+//单任务依赖：通过dependsOn指定要依赖的任务
+task B(dependsOn: A){
+    doFirst{
+        println 'task B'
+    }
+}
+
+task C{
+    doFirst{
+        println 'task C'
+    }
+}
+
+//多任务依赖
+task D{
+    dependsOn A, C
+    doFirst{
+        println 'task D'
+    }
+}
+
+
+//-------------------------自定义属性-----------------------
+
+ext.name1 = "Gradle"
+ext{ //自定义多个属性
+    age = 10
+    score = 100
+}
+//在SourceSet中使用自定义属性
+sourceSets.all{
+    ext.resourceDir = null
+}
+//配置自定义属性
+sourceSets{
+    main{
+        resourceDir = "main/res"
+    }
+    test{
+        resourceDir = "test/res"
+    }
+}
+
+task customProperty{
+    doFirst {
+        println "name=${name1}"
+        println "age=${age}"
+        println "score=${score}"
+
+
+        sourceSets.each { //遍历
+            println "${it.name} resourceDir is ${it.resourceDir}"
+        }
+    }
+}
+
+
+
+//-------------------------插件-----------------------

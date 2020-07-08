@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Butterknife.bind(this);
-        
+
         if (mV_TextView != null) mV_TextView.setText("这是通过注解引入的View");
 
     }

@@ -17,6 +17,10 @@
             <option value="$PROJECT_DIR$/AnnotationProcessor-Annoation" />
             <option value="$PROJECT_DIR$/AnnotationProcessor-Compile" />
             <option value="$PROJECT_DIR$/AnnotationProcessor-Core" />
+            <option value="$PROJECT_DIR$/Gradle" />
+            <option value="$PROJECT_DIR$/Gradle/Gradle_Child" />
+            <option value="$PROJECT_DIR$/Gradle/Gradle_Plugin_Groovy" />
+            <option value="$PROJECT_DIR$/Gradle/Gradle_Plugin_Java" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

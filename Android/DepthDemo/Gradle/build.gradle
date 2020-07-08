@@ -1,0 +1,269 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+
+//Gradle 学习:https://juejin.im/post/5d2f55aef265da1b725c3910
+
+task hello {
+
+    println("Task初始化的时候调用")
+
+
+    doLast { //Task 执行完毕之后
+        logger.lifecycle("在任务之后执行...")
+
+        println("任务执行中...")
+    }
+
+    doFirst {
+        println("在任务之前执行...")
+    }
+}
+
+task string {
+    doFirst {
+        //表达式
+        def str1 = "双引号"
+        //单纯的字符串常量
+        def str2 = '单引号'
+
+
+        println "双引号定义的字符串：" + str1
+        println "双引号定义的字符串：" + str1.class
+        println "单引号定义的字符串：" + str2
+
+        //变量动态变化
+        str1 = true;
+        println "双引号定义的字符串：" + str1.class
+
+        //使用$运算符
+        println "双引号定义的字符串：${str1}"
+        //只有一个变量的时候可以省去中括号
+        println "双引号定义的字符串：$str1"
+
+        //单引号定义的字符串不能使用表达式进行运算
+        println '单引号定义的字符串：$str2'
+
+    }
+}
+
+task list {
+    doFirst {
+        //定义List
+        def list = [1, 2, 3, 4, 5, 6];
+        def weekList = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'];
+        println "list的类型：" + list.class
+        println "weekList的类型：" + weekList.class
+
+        //访问集合里面的元素
+        println '第一个元素：' + list[0]//访问第一个元素
+        println '第二个元素：' + list[1]//访问第二个元素，以此类推
+
+        println '最后一个元素：' + list[-1]//访问最后一个元素
+        println '倒数第二个元素：' + list[-2]//访问倒数第二个元素，以此类推
+        println '某个范围内元素：' + list[2..4]//访问某个范围内元素，以此类推
+
+        //使用each遍历集合中的元素
+        weekList.each {
+            //使用it作为迭代的元素变量，不能写错喔
+            println it
+        }
+
+    }
+
+}
+
+task map {
+    doFirst {
+        //定义Map
+        def map = ['name': 'Groovy', 'age': 10];
+        println "map的类型：" + map.getClass().name;
+
+        //访问Map里面的元素
+        println map.name;
+        println map['name'];
+
+        //遍历Map中的元素
+        map.each {
+            println "${it.key} : ${it.value}"
+        }
+    }
+}
+
+//方法
+task method() {
+    doFirst {
+        //方法调用
+        methodAdd(1, 2)
+        methodAdd 1, 2
+
+        //获取方法返回的结果
+        def a = methodAdd 10, 20
+        println '获取方法返回的结果：' + a
+
+        //代码块作为参数传递
+        def list = [1, 2, 3, 4, 5];
+        list.each(
+                //闭包参数
+                {
+                    //	println it
+                }
+        )
+
+        //Groovy规定，如果方法的最后一个参数是闭包，可以直接放到方法外面
+        list.each() {
+            //	println it
+        }
+
+        //简写方式
+        list.each {
+            println it
+        }
+    }
+}
+
+def methodAdd(int a, int b) {
+    logger.lifecycle("执行函数 - 加法")
+    a + b
+}
+
+//JavaBean
+task javaBean {
+    doFirst {
+        //Groovy中定义JavaBean
+        Student student = new Student()
+        student.name = "Groovy"
+        student.age = 10
+
+        student.setName("Gradle")
+        println "名字是：" + student.name
+        //不能调用Getter方法获取值
+//	println "名字是："+student.getName
+        println "年龄是：${student.age}"
+        println "分数是：" + student.score
+    }
+}
+
+class Student {
+    private String name
+    private int age
+    //定义的Getter方法所对应的属性可以直接调用
+    public String getScore() {
+        100
+    }
+
+    //属性的Getter、Setter方法
+    public String setName(String name) {
+        this.name = name
+    }
+
+    public void getName() {
+        name
+    }
+}
+
+//闭包
+task closure {
+    doFirst {
+        //自定义闭包的执行
+        mEach { println it }
+
+        //向闭包传递参数
+        mEachWithParams { m, n -> //m,n ->将闭包的参数和主体区分离开来
+            println "${m} is ${n}"
+        }
+    }
+}
+
+//1.定义一个方法，参数closure用于接收闭包
+//2.闭包的执行就是花括号里面代码的执行
+//3.闭包接收的参数就是闭包参数closure参数中的i，如果是一个参数默认就是it变量
+def mEach(自定义名称) {
+    for (int i in 1..5) {
+        自定义名称(i)
+    }
+}
+
+//向闭包传递参数
+def mEachWithParams(closure) {
+    def map = ["name": "Groovy", "age": 10]
+    map.each {
+        closure(it.key, it.value)
+    }
+}
+
+
+//闭包委托
+task delegate {
+    doFirst {
+        new Delegate().test {
+            //Groovy闭包的三个属性：thisObject、owner、delegate
+            println "thisObject:${thisObject.getClass()}"
+            println "owner:${owner.getClass()}"
+            println "delegate:${delegate.getClass()}"
+
+            //闭包默认it
+            println "闭包默认it:" + it.getClass()
+
+            //定义的方法，优先使用thisObject来处理
+            method()
+            //闭包中的方法
+            it.method()
+        }
+    }
+}
+
+def method() {
+    println "mththod in root:${this.getClass()}"
+}
+
+class Delegate {
+    def method() {
+        println "mththod in Delegate:${this.getClass()}"
+    }
+
+    //闭包
+    def test(Closure<Delegate> closure) {
+        closure(this);
+    }
+}
+
+
+//闭包delegate 属性配置
+task student{
+    doFirst {
+        configStudent{
+            println "当前it：${it}"
+
+            name = "Groovy"
+            age = 10
+            getInfo()
+        }
+    }
+}
+
+class Student2{
+    String name
+    int age
+    def getInfo(){
+        println "name is ${name}, age is ${age}"
+    }
+}
+
+def configStudent(Closure<Student> closure){
+    Student2 student = new Student2()
+    //设置委托对象为当前创建的Student实例
+    closure.delegate = student
+    //设置委托模式优先，如果不设置闭包内方法的处理者是thisObject
+    closure.setResolveStrategy(Closure.DELEGATE_FIRST)
+    //设置it变量
+    closure(student)
+}
+
+

@@ -1,0 +1,29 @@
+apply plugin: 'java'
+
+//指定新的源代码集合
+sourceSets{
+    vip {
+        java{
+            srcDir 'src/vip/java'
+        }
+
+        resources{
+            srcDir 'src/vip/resources'
+        }
+    }
+
+    main{
+        output.resourcesDir = file('$projectDir/Gradle/Gradle_Plugin_Java/libs')
+    }
+
+
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    vipImplementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

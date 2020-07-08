@@ -1,3 +1,5 @@
+
+include ':Gradle'
 include ':AnnotationProcessor-Core'
 include ':AnnotationProcessor-Annoation'
 include ':AnnotationProcessor-Compile'
@@ -5,3 +7,12 @@ include ':AnnotationProcessor'
 include ':AAR_Proguard'
 include ':app'
 rootProject.name = "DepthDemo"
+
+
+//配置子目录下的Model - 如果不指定 默认和 setting.gradle 同级目录
+include ':Gradle_Child'
+project(':Gradle_Child').projectDir = new File(rootDir, 'Gradle/Gradle_Child')
+include ':Gradle_Plugin_Groovy'
+project(':Gradle_Plugin_Groovy').projectDir = new File(rootDir, 'Gradle/Gradle_Plugin_Groovy')
+include ':Gradle_Plugin_Java'
+project(':Gradle_Plugin_Java').projectDir = new File(rootDir, 'Gradle/Gradle_Plugin_Java')

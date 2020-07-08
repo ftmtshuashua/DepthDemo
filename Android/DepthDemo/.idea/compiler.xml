@@ -24,6 +24,11 @@
       <module name="AnnotationProcessor-Annoation" target="1.7" />
       <module name="AnnotationProcessor-Compile" target="1.7" />
       <module name="Compiler" target="1.7" />
+      <module name="Gradle" target="1.7" />
+      <module name="Gradle_Child" target="1.7" />
+      <module name="Gradle_Plugin" target="1.7" />
+      <module name="Gradle_Plugin_Groovy" target="1.7" />
+      <module name="Gradle_Plugin_Java" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
