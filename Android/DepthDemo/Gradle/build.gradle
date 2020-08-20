@@ -1,4 +1,5 @@
 apply plugin: 'java-library'
+apply from: 'Utils.gradle'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -236,9 +237,9 @@ class Delegate {
 
 
 //闭包delegate 属性配置
-task student{
+task student {
     doFirst {
-        configStudent{
+        configStudent {
             println "当前it：${it}"
 
             name = "Groovy"
@@ -248,15 +249,16 @@ task student{
     }
 }
 
-class Student2{
+class Student2 {
     String name
     int age
-    def getInfo(){
+
+    def getInfo() {
         println "name is ${name}, age is ${age}"
     }
 }
 
-def configStudent(Closure<Student> closure){
+def configStudent(Closure<Student> closure) {
     Student2 student = new Student2()
     //设置委托对象为当前创建的Student实例
     closure.delegate = student
@@ -265,5 +267,4 @@ def configStudent(Closure<Student> closure){
     //设置it变量
     closure(student)
 }
-
 

@@ -1,0 +1,91 @@
+/*----------------------------------- 工具方法集合 ---------------------------------*/
+
+//文件夹 - 创建
+def dir_generate(String dir) {
+    dir_generate(new File(dir))
+}
+
+def dir_generate(File file) {
+    if (!file.exists() || !file.isDirectory()) file.mkdirs()
+    file
+}
+
+ext.dir_generate = { file -> dir_generate(file) }
+
+//文件 - 删除
+def file_delete(String path) {
+    file_delete(new File(path))
+}
+
+def file_delete(File file) {
+    if (file.exists()) file.delete()
+    file
+}
+
+ext.file_delete = { file -> file_delete(file) }
+
+//文件 - 移动
+def file_move(String from, String to) {
+    file_move(new File(from), new File(to))
+}
+
+def file_move(File from, String to) {
+    file_move(from, new File(to))
+}
+
+def file_move(String from, File to) {
+    file_move(new File(from), to)
+}
+
+def file_move(File file_from, File file_to) {
+    if (file_from.exists()) {
+        file_delete(file_to)
+        dir_generate(file_to.getParentFile())
+        file_from.renameTo(file_to)
+    }
+}
+
+ext.file_move = { file_from, file_to -> file_move(file_from, file_to) }
+
+
+//文件 - 复制
+def file_copy(String from, String to) {
+    file_copy(new File(from), new File(to))
+}
+
+def file_copy(File from, String to) {
+    file_copy(from, new File(to))
+}
+
+def file_copy(String from, File to) {
+    file_copy(new File(from), to)
+}
+
+def file_copy(File file_from, File file_to) {
+    if (file_from.exists()) {
+        file_delete(file_to)
+        file_to.createNewFile()
+        file_from.withDataInputStream { input ->
+            file_to.withOutputStream { output -> output << input }
+        }
+    } else {
+        println("文件不存在：${file_from}")
+    }
+}
+
+ext.file_copy = { file_from, file_to -> file_copy(file_from, file_to) }
+
+/*------------------------- 测试 --------------------------*/
+
+task fmain {
+    doFirst {
+//        def dir = dir_generate('./Greadle生成的文件')
+//        println("生成文件:${dir.getAbsolutePath()}")
+
+        file_copy('./这是一个文件', new File('./这是一个文件 - 复制过来的文件'))
+
+//        file_move(dir, './移动后的文件')
+//        file_move('./Greadle生成的文件', './移动后的文件')
+//        file_move('C:\\hope\\LFP_Git_Project\\DepthDemo\\Android\\DepthDemo\\Gradle\\Greadle生成的文件', './移动后的文件')
+    }
+}
