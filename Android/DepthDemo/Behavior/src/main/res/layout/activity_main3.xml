@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.depth.behavior.behavior.HeaderViewPager
+        android:id="@+id/view_ViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent" />
+
+    <com.depth.behavior.behavior.FootFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/ic_launcher">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1000dp"
+                    android:gravity="center"
+                    android:text="底部内容" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </com.depth.behavior.behavior.FootFrameLayout>
+
+    <com.depth.behavior.behavior.FootFollowFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#553700B3"
+        android:clickable="false">
+
+        <ImageView
+            android:id="@+id/view_BackTop"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="65dp"
+            android:src="@drawable/ic_home_weather_back_top" />
+
+    </com.depth.behavior.behavior.FootFollowFrameLayout>
+
+
+    <Button
+        android:id="@+id/view_GoToDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="滚动到信息流" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

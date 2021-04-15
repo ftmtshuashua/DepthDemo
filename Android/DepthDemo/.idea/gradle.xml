@@ -16,7 +16,7 @@
             <option value="$PROJECT_DIR$/AnnotationProcessor" />
             <option value="$PROJECT_DIR$/AnnotationProcessor-Annoation" />
             <option value="$PROJECT_DIR$/AnnotationProcessor-Compile" />
-            <option value="$PROJECT_DIR$/AnnotationProcessor-Core" />
+            <option value="$PROJECT_DIR$/Behavior" />
             <option value="$PROJECT_DIR$/Gradle" />
             <option value="$PROJECT_DIR$/Gradle/Gradle_Child" />
             <option value="$PROJECT_DIR$/Gradle/Gradle_Plugin_Groovy" />
@@ -26,6 +26,7 @@
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
   </component>

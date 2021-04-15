@@ -1,6 +1,6 @@
+include ':Behavior'
 include ':UtilsLibrary'
 include ':Gradle'
-include ':AnnotationProcessor-Core'
 include ':AnnotationProcessor-Annoation'
 include ':AnnotationProcessor-Compile'
 include ':AnnotationProcessor'
